@@ -47,6 +47,32 @@ Currently there are two ways to install.
 
   cpan App::oaf
 
+=head1 SUPPORTED FORMATS & SERVICES
+
+=over 2
+
+=item * Bitbucket
+
+=item * Disqus
+
+=item * GitHub
+
+=item * GitLab
+
+=item * HipChat
+
+=item * HTML
+
+=item * JIRA
+
+=item * Markdown
+
+=item * MediWiki
+
+=item * Slack
+
+=back
+
 =head1 AUTHOR
 
 Skye Shaw (sshaw [AT] gmail.com)
