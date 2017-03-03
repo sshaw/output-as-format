@@ -144,11 +144,13 @@ die "unknown format '$format'\n" unless $formats{$format};
 my @indents;
 my $snippet = '';
 
-while (<>) {
+while (<STDIN>) {
   s/\t/' ' x 8/eg;
   $snippet .= $_;
   push @indents, /^(\s*)/ && length $1;
 }
+
+exit 1 unless @indents;
 
 my $trim = (sort { $a <=> $b } @indents)[0];
 $snippet =~ s/^\s{$trim}//mg;
