@@ -8,6 +8,9 @@ App::oaf - Output as GitHub/Slack/JIRA/HipChat/... Formatted code
 
 =head1 SYNOPSIS
 
+Output as Format will read from stdin and output code formatted
+for GitHub/Slack/JIRA/HipChat/...
+
   usage: oaf [-pms] [-f format] [-l lang]
   Output stdin as code in the given format
     -f FORMAT Format to output, defaults to markdown
