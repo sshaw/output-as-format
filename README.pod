@@ -2,20 +2,22 @@
 
 =head1 NAME
 
-App::oaf - Output as GitHub/Slack/JIRA/HipChat/... Formatted code
+App::oaf - Output stdin as GitHub/Slack/JIRA/HipChat/... Formatted code
 
 =head1 SYNOPSIS
 
 Output as Format will read from stdin and output code formatted
 for GitHub/Slack/JIRA/HipChat/...
 
-  usage: oaf [-pms] [-f format] [-l lang]
+  usage: oaf [-mps] [-f format] [-l lang]
   Output stdin as code in the given format
-    -f FORMAT Format to output, defaults to markdown
+    -f FORMAT Format to output, case insensitive, defaults to 'markdown'
+    --help    Display this message
     -l LANG   Programming language of stdin, if supported by FORMAT
-    -p        Print the supported formats and exit
     -m        Force multiline output, if supported by FORMAT
+    -p        Print the supported formats and exit
     -s        Force single line output, if supported by FORMAT
+    --version Print the version
 
 =head1 EXAMPLES
 
@@ -41,7 +43,7 @@ Currently there are two ways to install.
 
 =head2 Download
 
-  curl -o oaf https://raw.githubusercontent.com/sshaw/output-as-format/master/bin/oaf
+  curl -o oaf https://raw.githubusercontent.com/sshaw/output-as-format/master/oaf
   chmod 555 oaf
 
 =head2 CPAN
@@ -68,11 +70,25 @@ Currently there are two ways to install.
 
 =item * Markdown
 
-=item * MediWiki
+=item * MediaWiki
 
 =item * Slack
 
 =back
+
+=head1 DEFAULTS
+
+Defaults can be set by the following environment variables:
+
+=over 2
+
+=item * C<OAF_FORMAT> - output format
+
+=item * C<OAF_LANG> - input programming language
+
+=back
+
+The default format is Markdown. There is no default programming language.
 
 =head1 AUTHOR
 

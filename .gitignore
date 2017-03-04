@@ -86,3 +86,6 @@ inc/
 /*.zip
 
 # End of https://www.gitignore.io/api/perl,emacs
+
+# Build process puts this here
+bin/oaf

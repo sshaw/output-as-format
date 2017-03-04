@@ -2,6 +2,21 @@ use strict;
 use warnings;
 
 use ExtUtils::MakeMaker;
+use File::Basename;
+
+if (-f 'oaf') {
+  open my $in,  '<', 'oaf' or die $!;
+  open my $out, '>', 'bin/oaf' or die $!;
+
+  # Fixup for MakeMaker to replace with system path
+  while (<$in>) {
+    s|^#!/usr/bin/env perl|#!perl|;
+    print $out $_;
+  }
+
+  close $in;
+  close $out;
+}
 
 WriteMakefile(
      NAME         => 'App::oaf',

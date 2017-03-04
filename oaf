@@ -23,13 +23,15 @@ our $VERSION = '0.01';
 sub HELP_MESSAGE {
     my $out = shift;
     print $out <<USAGE
-usage: oaf [-pms] [-f format] [-l lang]
+usage: oaf [-mps] [-f format] [-l lang]
 Output stdin as code in the given format
   -f FORMAT Format to output, defaults to markdown
+  --help    Display this message
   -l LANG   Programming language of stdin, if supported by FORMAT
-  -p        Print the supported formats and exit
   -m        Force multiline output, if supported by FORMAT
+  -p        Print the supported formats and exit
   -s        Force single line output, if supported by FORMAT
+  --version Print the version
 USAGE
 }
 
@@ -38,8 +40,17 @@ sub VERSION_MESSAGE {
   print $out "Output as Format v$VERSION\n";
 }
 
+sub html_escape {
+  my $text = shift;
+  my %escapes = ('&' => '&amp;', '<' => '&lt;');
+
+  $$text =~ s/[&<]/$escapes{$&}/eg;
+}
+
 sub disqus {
   my ($snippet, undef, $lang) = @_;
+  html_escape(\$snippet);
+
   printf "<pre><code class='%s'>\n%s</code></pre>\n", $lang || '', $snippet;
 }
 
@@ -60,6 +71,8 @@ sub hipchat {
 
 sub html {
   my ($snippet, $multiline, $lang) = @_;
+  html_escape(\$snippet);
+
   if ($multiline) {
     printf "<pre><code>\n%s</code></pre>", $snippet;
   }
@@ -133,13 +146,13 @@ if ($options{p}) {
   exit;
 }
 
-my $lang = $options{l};
+my $lang = $options{l} || $ENV{OAF_LANG};
 
 my $multiline = $options{m};
 $multiline = 0 if $options{s};
 
-my $format = $options{f} || 'markdown';
-die "unknown format '$format'\n" unless $formats{$format};
+my $format = $options{f} || $ENV{OAF_FORMAT} || 'markdown';
+die "unknown format '$format'\n" unless $formats{lc $format};
 
 my @indents;
 my $snippet = '';
@@ -152,6 +165,7 @@ while (<STDIN>) {
 
 exit 1 unless @indents;
 
+# Remove the minimum amount of leading white space
 my $trim = (sort { $a <=> $b } @indents)[0];
 $snippet =~ s/^\s{$trim}//mg;
 
@@ -160,4 +174,4 @@ chomp $snippet if @indents == 1;
 
 $multiline = @indents > 1 ? 1 : 0 unless defined($multiline);
 
-$formats{$format}->($snippet, $multiline, $lang);
+$formats{lc $format}->($snippet, $multiline, $lang);
