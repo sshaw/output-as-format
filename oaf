@@ -187,10 +187,9 @@ my %formats = (bitbucket => \&github,
 HELP_MESSAGE(*STDERR) && exit 1 unless getopts('f:ml:ps', \%options);
 
 if ($options{p}) {
-  local $,=', ';
   local $\= "\n";
 
-  print sort keys %formats;
+  print for sort keys %formats;
 
   exit;
 }
