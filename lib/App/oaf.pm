@@ -11,11 +11,13 @@ App::oaf - Output stdin as GitHub/Slack/JIRA etc... formatted code
 Output as Format will read from stdin and output code formatted
 for GitHub/Slack/JIRA/ etc...
 
-  usage: oaf [-mps] [-f format] [-l lang]
+  usage: oaf [-mps] [-f format] [-l lang] [--list[1]]
   Output stdin as code in the given format
-    -f FORMAT Format to output, case insensitive, defaults to 'markdown'
+    -f FORMAT Format to output, defaults to markdown
     --help    Display this message
     -l LANG   Programming language of stdin, if supported by FORMAT
+    --list    Output a bullet point list using FORMAT, each line is a list item
+    --list1   Output a numbered list using FORMAT, each line is a list item
     -m        Force multiline output, if supported by FORMAT
     -p        Print the supported formats and exit
     -s        Force single line output, if supported by FORMAT
@@ -111,6 +113,6 @@ this is based.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2017 Skye Shaw.
+Copyright (c) 2017-2019 Skye Shaw.
 
 This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
