@@ -29,6 +29,30 @@ sub indent {
   $$text =~ s/^/' ' x $n/gme;
 }
 
+
+# Should just do Markdown->quote, Markdown->list, etc...
+package Quote;
+
+sub markdown {
+  my $lines = shift;
+  printf "> %s\n", $_ for @$lines;
+}
+
+sub output {
+  shift;
+
+  my $format = shift;
+  my $lines = [];
+
+  while (<STDIN>) {
+    chomp;
+    s/^\s*//g;
+    push @$lines, $_;
+  }
+
+  $Quote::{$format}->($lines);
+}
+
 package List;
 
 sub html {
@@ -61,12 +85,15 @@ sub markdown {
 }
 
 sub jira {
-  my $lines = shift;
-  printf "# %s\n", $_ for @$lines;
+  my ($lines, $numbered) = @_;
+  my $prefix = $numbered ? '#' : '*';
+  printf "%s %s\n", $prefix, $_ for @$lines;
 }
 
 sub orgmode {
-  my $lines = shift;
+  my ($lines, $numbered) = @_;
+  my $prefix = $numbered ? '1.' : '-';
+
   printf "- %s\n", $_ for @$lines;
 }
 
@@ -255,7 +282,7 @@ sub HELP_MESSAGE {
 
     print $out <<USAGE
 usage: oaf [-mps] [-f format] [-l lang] [--list]
-Output stdin as code in the given format
+Output stdin according to the given options
   -f FORMAT Format to output, defaults to markdown
   --help    Display this message
   -l LANG   Programming language of stdin, if supported by FORMAT
@@ -263,6 +290,7 @@ Output stdin as code in the given format
   --list1   Output a numbered list using FORMAT, each line is a list item
   -m        Force multiline output, if supported by FORMAT
   -p        Print the supported formats and exit
+  --quote   Output as a quote in FORMAT
   -s        Force single line output, if supported by FORMAT
   --version Print the version
 USAGE
@@ -289,14 +317,15 @@ my %formats = (bitbucket => 'github',
                slack     => 'slack');
 
 GetOptions('f=s'       => \$options{f},
-           'h|help'    => sub { HELP_MESSAGE(*STDERR) and exit },
+           'h|help'    => sub { HELP_MESSAGE(*STDOUT) and exit },
            'l=s'       => \$options{l},
            'list'      => \$options{list},
            'list1'     => \$options{list1},
            'm'         => \$options{m},
            'p'         => \$options{p},
+           'quote'     => \$options{quote},
            's'         => \$options{s},
-           'v|version' => sub { VERSION_MESSAGE(*STDERR) and exit }
+           'v|version' => sub { VERSION_MESSAGE(*STDOUT) and exit }
           ) or HELP_MESSAGE(*STDERR) and exit 1;
 
 if ($options{p}) {
@@ -320,6 +349,9 @@ die "Unknown format: $format\n" unless $formats{$format};
 if ($options{list} || $options{list1}) {
   my $numbered = $options{list1} || 0;
   List->output($format, $numbered);
+}
+elsif ($options{quote}) {
+  Quote->output($format);
 }
 else {
   Code->output($format, $lang, $multiline);
