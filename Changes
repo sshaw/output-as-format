@@ -1,4 +1,9 @@
 -------------------------
+2019-11-09	v0.03
+-------------------------
+* Add support for outputting lists and quotes
+
+-------------------------
 2019-09-21	v0.02
 -------------------------
 * Add support for Org-mode, POD, and rst
