@@ -73,6 +73,8 @@ sub output {
   $Quote::{$format}->($lines, $multiline);
 }
 
+$Quote::{github} = *markdown;
+
 package List;
 
 sub html {
@@ -147,6 +149,7 @@ sub output {
   $List::{$format}->($lines, $numbered);
 }
 
+$List::{github} = *markdown;
 
 package Code;
 
@@ -369,11 +372,11 @@ die "Unknown format: $format\n" unless $formats{$format};
 
 if ($options{list} || $options{list1}) {
   my $numbered = $options{list1} || 0;
-  List->output($format, $numbered);
+  List->output($formats{$format}, $numbered);
 }
 elsif ($options{quote}) {
-  Quote->output($format, $multiline);
+  Quote->output($formats{$format}, $multiline);
 }
 else {
-  Code->output($format, $lang, $multiline);
+  Code->output($formats{$format}, $lang, $multiline);
 }
