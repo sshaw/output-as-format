@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+
 #
 # Output as Format: read from stdin and output it as code in the given format
 # https://github.com/sshaw/output-as-format

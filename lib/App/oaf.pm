@@ -44,17 +44,26 @@ Output as MediaWiki:
 
 Output a Markdown list:
 
-  echo -e "line1\nline2\nline3" | ./oaf --list
+  echo -e "line1\nline2\nline3" | oaf --list
   * line1
   * line2
   * line3
 
 Output a numbered list formatted for JIRA:
 
-  echo -e "line1\nline2\nline3" | ./oaf --list1 -f jira
+  echo -e "line1\nline2\nline3" | oaf --list1 -f jira
   # line1
   # line2
   # line3
+
+Output a quote formatted for Org mode:
+
+  echo -e "line1\nline2\nline3" | oaf --quote -f orgmode
+  #+BEGIN_QUOTE
+  line1
+  line2
+  line3
+  #+END_QUOTE
 
 =head1 INSTALLATION
 
