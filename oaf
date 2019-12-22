@@ -118,7 +118,8 @@ sub orgmode {
 }
 
 sub rst {
-  # same as markdown for ul
+  # Bullet lists are the same as Markdown
+  return markdown(shift) unless pop;
   my $lines = shift;
   printf "#. %s\n", $_ for @$lines;
 }
