@@ -33,6 +33,17 @@ sub indent {
 # Should just do Markdown->quote, Markdown->list, etc...
 package Quote;
 
+sub html {
+  my $lines = shift;
+
+  print '<blockquote>',"\n";
+  for (@$lines) {
+    Util::html_escape(\$_);
+    print $_,"\n";
+  }
+  print '</blockquote>',"\n";
+}
+
 sub jira {
   my ($lines, $multiline) = @_;
   if ($multiline) {
@@ -305,18 +316,18 @@ sub HELP_MESSAGE {
     my $out = shift;
 
     print $out <<USAGE
-usage: oaf [-mps] [-f format] [-l lang] [--list]
+usage: oaf [-1mpsLQ] [-f format] [-l lang] [--list[1]] [--quote]
 Output stdin according to the given options
-  -f FORMAT Format to output, defaults to markdown
-  --help    Display this message
-  -l LANG   Programming language of stdin, if supported by FORMAT
-  --list    Output a bullet point list using FORMAT, each line is a list item
-  --list1   Output a numbered list using FORMAT, each line is a list item
-  -m        Force multiline output, if supported by FORMAT
-  -p        Print the supported formats and exit
-  --quote   Output as a quote in FORMAT
-  -s        Force single line output, if supported by FORMAT
-  --version Print the version
+  -f FORMAT    Format to output, defaults to markdown
+  --help       Display this message
+  -l LANG      Programming language of stdin, if supported by FORMAT
+  -L, --list   Output a bullet point list using FORMAT, each line is a list item
+  -1, --list1  Output a numbered list using FORMAT, each line is a list item
+  -m           Force multiline output, if supported by FORMAT
+  -p           Print the supported formats and exit
+  -Q, --quote  Output as a quote in FORMAT
+  -s           Force single line output, if supported by FORMAT
+  --version    Print the version
 USAGE
 }
 
@@ -343,11 +354,11 @@ my %formats = (bitbucket => 'github',
 GetOptions('f=s'       => \$options{f},
            'h|help'    => sub { HELP_MESSAGE(*STDOUT) and exit },
            'l=s'       => \$options{l},
-           'list'      => \$options{list},
-           'list1'     => \$options{list1},
+           'list|L'    => \$options{list},
+           'list1|1'   => \$options{list1},
            'm'         => \$options{m},
            'p'         => \$options{p},
-           'quote'     => \$options{quote},
+           'quote|Q'   => \$options{quote},
            's'         => \$options{s},
            'v|version' => sub { VERSION_MESSAGE(*STDOUT) and exit }
           ) or HELP_MESSAGE(*STDERR) and exit 1;
