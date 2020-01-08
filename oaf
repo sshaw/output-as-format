@@ -314,7 +314,7 @@ package main;
 
 use Getopt::Long qw(:config no_ignore_case);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub HELP_MESSAGE {
     my $out = shift;
@@ -323,7 +323,7 @@ sub HELP_MESSAGE {
 usage: oaf [-1mpsLQ] [-f format] [-l lang] [--list[1]] [--quote]
 Output stdin according to the given options
   -f FORMAT    Format to output, defaults to markdown
-  --help       Display this message
+  -h, --help   Display this message
   -l LANG      Programming language of stdin, if supported by FORMAT
   -L, --list   Output a bullet point list using FORMAT, each line is a list item
   -1, --list1  Output a numbered list using FORMAT, each line is a list item

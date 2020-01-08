@@ -1,4 +1,12 @@
 -------------------------
+2020-01-07	v0.04
+-------------------------
+* Add support for Jira, Org-mode, HTML, and Git service quoting
+* Add support for rst, Slack, and Git service unordered list
+* Add short options for quotes and lists
+* Improved error handling for unsupported formats
+
+-------------------------
 2019-11-09	v0.03
 -------------------------
 * Add support for outputting lists and quotes
