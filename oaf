@@ -74,6 +74,8 @@ sub output {
   my ($format, $multiline) = @_;
   my $lines = [];
 
+  die "unsupported quote format: $format\n" unless $Quote::{$format};
+
   while (<STDIN>) {
     chomp;
     s/^\s*//g;
@@ -150,6 +152,8 @@ sub output {
 
   my ($format, $numbered) = @_;
   my $lines = [];
+
+  die "unsupported list format: $format\n" unless $List::{$format};
 
   while (<STDIN>) {
     chomp;
