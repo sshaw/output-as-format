@@ -86,7 +86,7 @@ sub output {
   $Quote::{$format}->($lines, $multiline);
 }
 
-$Quote::{github} = *markdown;
+$Quote::{$_} = *markdown for qw(github slack);
 
 package List;
 
@@ -164,7 +164,7 @@ sub output {
   $List::{$format}->($lines, $numbered);
 }
 
-$List::{github} = *markdown;
+$List::{$_} = *markdown for qw(github slack);
 
 package Code;
 
