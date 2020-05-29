@@ -123,6 +123,8 @@ Defaults can be set by the following environment variables:
 
 =item * C<OAF_LANG> - input programming language
 
+=item * C<OAF_OPTIONS> - string containing default options to use
+
 =back
 
 The default format is Markdown. There is no default programming language.
