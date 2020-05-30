@@ -127,9 +127,9 @@ sub jira {
 
 sub orgmode {
   my ($lines, $numbered) = @_;
-  my $prefix = $numbered ? '1.' : '-';
+  my $n = 1;
 
-  printf "- %s\n", $_ for @$lines;
+  printf "%s %s\n", $numbered ? $n++ . '.' : '-', $_ for @$lines;
 }
 
 sub rst {
